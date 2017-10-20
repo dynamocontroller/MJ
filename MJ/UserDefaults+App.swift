@@ -12,14 +12,14 @@ extension UserDefaults {
     private class var zityaKey: String {
         return "zitya"
     }
+    private class var shimotyaKey: String {
+        return "shimotya"
+    }
     private class var kamityaKey: String {
         return "kamitya"
     }
     private class var toimenKey: String {
         return "toimen"
-    }
-    private class var shimotyaKey: String {
-        return "shimotya"
     }
     
     private class var nameKey: String {
@@ -29,7 +29,7 @@ extension UserDefaults {
         return ".score"
     }
     
-    // MARK: -
+    // MARK: - 自家
     
     class var zityaName: String? {
         get {
@@ -55,59 +55,7 @@ extension UserDefaults {
         }
     }
     
-    // MARK: -
-    
-    class var kamityaName: String? {
-        get {
-            let key = self.kamityaKey + self.nameKey
-            return UserDefaults.standard.string(forKey: key)
-        }
-        set {
-            let key = self.kamityaKey + self.nameKey
-            UserDefaults.standard.set(newValue, forKey: key)
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
-    class var kamityaScore: Int {
-        get {
-            let key = self.kamityaKey + self.scoreKey
-            return UserDefaults.standard.integer(forKey: key)
-        }
-        set {
-            let key = self.kamityaKey + self.scoreKey
-            UserDefaults.standard.set(newValue, forKey: key)
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
-    // MARK: -
-    
-    class var toimenName: String? {
-        get {
-            let key = self.toimenKey + self.nameKey
-            return UserDefaults.standard.string(forKey: key)
-        }
-        set {
-            let key = self.toimenKey + self.nameKey
-            UserDefaults.standard.set(newValue, forKey: key)
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
-    class var toimenScore: Int {
-        get {
-            let key = self.toimenKey + self.scoreKey
-            return UserDefaults.standard.integer(forKey: key)
-        }
-        set {
-            let key = self.toimenKey + self.scoreKey
-            UserDefaults.standard.set(newValue, forKey: key)
-            UserDefaults.standard.synchronize()
-        }
-    }
-    
-    // MARK: -
+    // MARK: - 下家
     
     class var shimotyaName: String? {
         get {
@@ -133,6 +81,56 @@ extension UserDefaults {
         }
     }
     
+    // MARK: - 対面
     
+    class var toimenName: String? {
+        get {
+            let key = self.toimenKey + self.nameKey
+            return UserDefaults.standard.string(forKey: key)
+        }
+        set {
+            let key = self.toimenKey + self.nameKey
+            UserDefaults.standard.set(newValue, forKey: key)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    class var toimenScore: Int {
+        get {
+            let key = self.toimenKey + self.scoreKey
+            return UserDefaults.standard.integer(forKey: key)
+        }
+        set {
+            let key = self.toimenKey + self.scoreKey
+            UserDefaults.standard.set(newValue, forKey: key)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    // MARK: - 上家
+    
+    class var kamityaName: String? {
+        get {
+            let key = self.kamityaKey + self.nameKey
+            return UserDefaults.standard.string(forKey: key)
+        }
+        set {
+            let key = self.kamityaKey + self.nameKey
+            UserDefaults.standard.set(newValue, forKey: key)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    class var kamityaScore: Int {
+        get {
+            let key = self.kamityaKey + self.scoreKey
+            return UserDefaults.standard.integer(forKey: key)
+        }
+        set {
+            let key = self.kamityaKey + self.scoreKey
+            UserDefaults.standard.set(newValue, forKey: key)
+            UserDefaults.standard.synchronize()
+        }
+    }
     
 }

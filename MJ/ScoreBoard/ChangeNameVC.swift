@@ -10,16 +10,16 @@ import Foundation
 import UIKit
 
 
+protocol ChangeNameVCDelegate: class {
+    func didChangeName(_ names: [String?])
+}
+
 /**
  names[0]...    自家
  names[1]...    下家
  names[2]...    対面
  names[3]...    上家
  */
-protocol ChangeNameVCDelegate: class {
-    func didChangeName(_ names: [String?])
-}
-
 class ChangeNameVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var dialogView: UIView!

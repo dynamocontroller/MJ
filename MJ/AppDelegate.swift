@@ -21,10 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarVC = TabBarVC()
         
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = tabBarVC
-        window.tintColor = UIColor(red: 0x00/255.0, green: 0xb8/255.0, blue: 0xd4/255.0, alpha: 1.0)
+        	window.rootViewController = tabBarVC
+        	window.tintColor = UIColor(red: 0x00/255.0, green: 0xb8/255.0, blue: 0xd4/255.0, alpha: 1.0)
         self.window = window
-        window.makeKeyAndVisible()
+        self.window?.makeKeyAndVisible()
         
         return true
 

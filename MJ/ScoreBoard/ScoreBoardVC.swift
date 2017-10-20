@@ -1,5 +1,5 @@
 //
-//  ScoreVC.swift
+//  ScoreBoardVC.swift
 //  MJ
 //
 //  Created by Nagayama Ryo on 2016/12/09.
@@ -17,68 +17,90 @@ import UIKit
  2...	対面
  3...	上家
  */
-class ScoreTableVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate {
+class ScoreBoardVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate {
     
     @IBOutlet var differenceLabels: [UILabel]!
     @IBOutlet var baseViews: [UIView]!
 
     @IBOutlet weak var zityaNameLabel: UILabel!
-    @IBOutlet weak var kamityaNameLabel: UILabel!
-    @IBOutlet weak var toimenNameLabel: UILabel!
     @IBOutlet weak var shimotyaNameLabel: UILabel!
+    @IBOutlet weak var toimenNameLabel: UILabel!
+    @IBOutlet weak var kamityaNameLabel: UILabel!
     
     @IBOutlet weak var zityaScoreField: UITextField!
-    @IBOutlet weak var kamityaScoreField: UITextField!
-    @IBOutlet weak var toimenScoreField: UITextField!
     @IBOutlet weak var shimotyaScoreField: UITextField!
+    @IBOutlet weak var toimenScoreField: UITextField!
+    @IBOutlet weak var kamityaScoreField: UITextField!
     
     private var nameLabels: [UILabel] {
         var ret = [UILabel]()
-        	ret.append(self.zityaNameLabel)
-        	ret.append(self.kamityaNameLabel)
-        	ret.append(self.toimenNameLabel)
-        	ret.append(self.shimotyaNameLabel)
+        ret.append(self.zityaNameLabel)
+        ret.append(self.shimotyaNameLabel)
+        ret.append(self.toimenNameLabel)
+        ret.append(self.kamityaNameLabel)
         return ret
     }
     
     private var scoreFields: [UITextField] {
         var ret = [UITextField]()
-        	ret.append(self.zityaScoreField)
-        	ret.append(self.kamityaScoreField)
-        	ret.append(self.toimenScoreField)
-        	ret.append(self.shimotyaScoreField)
+        ret.append(self.zityaScoreField)
+        ret.append(self.shimotyaScoreField)
+        ret.append(self.toimenScoreField)
+        ret.append(self.kamityaScoreField)
         return ret
     }
     
     @IBOutlet weak var changeNameButton: UIButton!
+    @IBOutlet weak var rotateButton: UIButton!
+    @IBOutlet weak var clearButton: UIButton!
+    
+    private var buttons: [UIButton] {
+        return [self.changeNameButton, self.rotateButton, self.clearButton]
+    }
     
     // MARK: -
     
     private var names: [String?] = {
         var ret = [String?]()
         ret.append(UserDefaults.zityaName)
-        ret.append(UserDefaults.kamityaName)
-        ret.append(UserDefaults.toimenName)
         ret.append(UserDefaults.shimotyaName)
+        ret.append(UserDefaults.toimenName)
+        ret.append(UserDefaults.kamityaName)
         return ret
     }()
     
     private var scores: [Int] = {
         var ret = [Int]()
         ret.append(UserDefaults.zityaScore)
-        ret.append(UserDefaults.kamityaScore)
-        ret.append(UserDefaults.toimenScore)
         ret.append(UserDefaults.shimotyaScore)
+        ret.append(UserDefaults.toimenScore)
+        ret.append(UserDefaults.kamityaScore)
         return ret
     }()
     
-    // 自家のものはない
-    private var diffLabels: [UILabel?] {
-        var ret = [UILabel?]()
-        // 自家のものはないため[0]にはnilを代入
-        ret.append(nil)
+    // 4人のscoreを高い順に並べ替えたもの(重複を許さず)の要素の中の
+    // 自家のscoreのindex + 1を返すことで順位を求めている
+    private var zityaRank: Int {
+        let zityaScore = self.scores[0]
         
-        for i in 1...3 {
+        var scores = self.scores
+        var ordered = [Int]()
+        
+        while let max = scores.max() {
+            ordered.append(max)
+            while scores.contains(max) {
+                scores.remove(at: scores.index(of: max)!)
+            }
+        }
+        
+        let rank = ordered.index(of: zityaScore)! + 1
+        return rank
+    }
+    
+    // 自家のものは順位表示用として使う
+    private var diffLabels: [UILabel] {
+        var ret = [UILabel]()
+        for i in self.differenceLabels.startIndex..<self.differenceLabels.endIndex {
             for label in self.differenceLabels {
                 if label.tag == i {
                     ret.append(label)
@@ -101,9 +123,15 @@ class ScoreTableVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate 
         
         self.baseViews.forEach({ view in
             view.layer.masksToBounds = false
-            view.layer.shadowOpacity = 0.2
+            view.layer.shadowOpacity = 0.4
             view.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
             view.layer.cornerRadius = 5.0
+        })
+        
+        self.buttons.forEach({ button in
+            button.clipsToBounds = false
+            button.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
+            button.layer.shadowOpacity = 0.4
         })
     
         self.updateUI()
@@ -111,24 +139,23 @@ class ScoreTableVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate 
     
     private func updateUI() {
         self.zityaNameLabel.text		= self.names[0]
-        self.kamityaNameLabel.text		= self.names[1]
-        self.toimenNameLabel.text		= self.names[2]
-        self.shimotyaNameLabel.text		= self.names[3]
+        self.shimotyaNameLabel.text     = self.names[1]
+        self.toimenNameLabel.text       = self.names[2]
+        self.kamityaNameLabel.text      = self.names[3]
         
         self.zityaScoreField.text		= String(self.scores[0])
-        self.kamityaScoreField.text		= String(self.scores[1])
+        self.shimotyaScoreField.text	= String(self.scores[1])
         self.toimenScoreField.text		= String(self.scores[2])
-        self.shimotyaScoreField.text	= String(self.scores[3])
+        self.kamityaScoreField.text		= String(self.scores[3])
         
         // 点数の計算と表示
         let zityaScore = self.scores[0]
         for (i, otherScore) in self.scores.enumerated() {
-            // ループ一度目は自家と自家の比較なのでcontinue
-            guard i != 0 else {
-                continue
-            }
-            // i = 0のとき以外はnilになり得ないが一応
-            guard let diffLabel = self.diffLabels[i] else {
+            let diffLabel = self.diffLabels[i]
+            
+            // i = 0の場合のdiffLavelは自家のものなので順位を設定する
+            if i == 0 {
+                diffLabel.text = "\(self.zityaRank)位"
                 continue
             }
             
@@ -145,6 +172,8 @@ class ScoreTableVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate 
             }
         }
     }
+    
+    
 
     private func hideKeyboard() {
         self.scoreFields.forEach({ scoreField in
@@ -156,27 +185,28 @@ class ScoreTableVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate 
     }
     
     private func saveCurrentName() {
-        let names = self.names
-        UserDefaults.zityaName		= names[0]
-        UserDefaults.kamityaName	= names[1]
-        UserDefaults.toimenName		= names[2]
-        UserDefaults.shimotyaName	= names[3]
+        UserDefaults.zityaName		= self.names[0]
+        UserDefaults.shimotyaName	= self.names[1]
+        UserDefaults.toimenName		= self.names[2]
+        UserDefaults.kamityaName	= self.names[3]
     }
     
     private func saveCurrentScore() {
-        let scores = self.scores
-        UserDefaults.zityaScore		= scores[0]
-        UserDefaults.kamityaScore	= scores[1]
-        UserDefaults.toimenScore	= scores[2]
-        UserDefaults.shimotyaScore	= scores[3]
+        UserDefaults.zityaScore		= self.scores[0]
+        UserDefaults.shimotyaScore	= self.scores[1]
+        UserDefaults.toimenScore	= self.scores[2]
+        UserDefaults.kamityaScore	= self.scores[3]
     }
     
     // MARK: - Action
     
-    // いらない??再計算が必要なタイミングがなければ決していい
-    @IBAction func calculateButtonTapped(_ sender: UIButton) {
+    @IBAction func changeNameButtonTapped(_ sender: UIButton) {
         self.hideKeyboard()
-        self.updateUI()
+        
+        let changeNameVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "changeNameVC") as! ChangeNameVC
+        changeNameVC.delegate = self
+        
+        self.present(changeNameVC, animated: true, completion: nil)
     }
     
     @IBAction func rotateButtonTapped(_ sender: UIButton) {
@@ -212,22 +242,6 @@ class ScoreTableVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate 
         
         self.updateUI()
     }
-    
-    @IBAction func changeNameButtonTapped(_ sender: UIButton) {
-        self.hideKeyboard()
-        
-        let changeNameVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "changeNameVC") as! ChangeNameVC
-        changeNameVC.delegate = self
-     
-        self.present(changeNameVC, animated: true, completion: nil)
-    }
-    
-    
-    
-    @IBAction func adjustScoreButtonTapped(_ sender: UIButton) {
-        //
-    }
-    
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         self.hideKeyboard()

@@ -1,5 +1,5 @@
 //
-//  CalculationVC.swift
+//  ScoreCalculationVC.swift
 //  MJ
 //
 //  Created by Nagayama Ryo on 2016/12/06.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ScoreSheetVC: UIViewController {
+class ScoreCalculationVC: UIViewController {
 
     @IBOutlet weak var parentButton: UIButton!
     @IBOutlet weak var childButton: UIButton!

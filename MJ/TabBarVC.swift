@@ -26,18 +26,18 @@ class TabBarVC: UITabBarController {
         
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         
-        let scoreTableVC = storyboard.instantiateViewController(withIdentifier: "scoreTableVC")
-        	scoreTableVC.tabBarItem = UITabBarItem(title: "点数状況", image: UIImage(named: "ScoreTable"), tag: 0)
+        let scoreBoardVC = storyboard.instantiateViewController(withIdentifier: "scoreboardvc")
+        	scoreBoardVC.tabBarItem = UITabBarItem(title: "点数状況", image: UIImage(named: "ScoreBoard"), tag: 0)
         
-        let scoreSheetVC = storyboard.instantiateViewController(withIdentifier: "scoreSheetVC")
-        	scoreSheetVC.tabBarItem = UITabBarItem(title: "点数計算", image: UIImage(named: "ScoreSheet"), tag: 1)
+        let scoreCalculationVC = storyboard.instantiateViewController(withIdentifier: "scorecalculationvc")
+        	scoreCalculationVC.tabBarItem = UITabBarItem(title: "点数計算", image: UIImage(named: "ScoreCalculation"), tag: 1)
         
-//        let testVC = storyboard.instantiateViewController(withIdentifier: "testVC")
+//        let testVC = storyboard.instantiateViewController(withIdentifier: "testvc")
 //        testVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 2)
 //        testVC.title = "テスト"
         
-        viewControllers.append(scoreTableVC)
-        viewControllers.append(scoreSheetVC)
+        viewControllers.append(scoreBoardVC)
+        viewControllers.append(scoreCalculationVC)
 //        viewControllers.append(testVC)
         
         self.setViewControllers(viewControllers, animated: true)
