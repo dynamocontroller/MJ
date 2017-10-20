@@ -113,6 +113,13 @@ class ScoreBoardVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate 
     
     // MARK: -
     
+    static func instantiate() -> UIViewController {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: self.className)
+        
+        return vc
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -203,7 +210,7 @@ class ScoreBoardVC: UIViewController, UITextFieldDelegate, ChangeNameVCDelegate 
     @IBAction func changeNameButtonTapped(_ sender: UIButton) {
         self.hideKeyboard()
         
-        let changeNameVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "changeNameVC") as! ChangeNameVC
+        let changeNameVC = ChangeNameVC.instantiate() as! ChangeNameVC
         changeNameVC.delegate = self
         
         self.present(changeNameVC, animated: true, completion: nil)

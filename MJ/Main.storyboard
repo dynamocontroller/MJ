@@ -18,7 +18,7 @@
         <!--Change NameVC-->
         <scene sceneID="2Mt-W3-vIf">
             <objects>
-                <viewController storyboardIdentifier="changeNameVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CxU-a7-jRz" customClass="ChangeNameVC" customModule="MJ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChangeNameVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CxU-a7-jRz" customClass="ChangeNameVC" customModule="MJ" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EsF-9E-U6B"/>
                         <viewControllerLayoutGuide type="bottom" id="6y2-sK-LQV"/>
@@ -222,7 +222,7 @@
         <!--Score BoardVC-->
         <scene sceneID="g6E-MV-qAm">
             <objects>
-                <viewController storyboardIdentifier="scoreboardvc" useStoryboardIdentifierAsRestorationIdentifier="YES" id="In0-kC-IMF" customClass="ScoreBoardVC" customModule="MJ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScoreBoardVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="In0-kC-IMF" customClass="ScoreBoardVC" customModule="MJ" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="q3i-6d-WhB"/>
                         <viewControllerLayoutGuide type="bottom" id="w2D-KP-oXj"/>
@@ -510,7 +510,7 @@
         <!--Score CalculationVC-->
         <scene sceneID="MJI-IJ-RBV">
             <objects>
-                <viewController storyboardIdentifier="scorecalculationvc" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aQo-bF-Eb6" customClass="ScoreCalculationVC" customModule="MJ" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScoreCalculationVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aQo-bF-Eb6" customClass="ScoreCalculationVC" customModule="MJ" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1DS-3M-Zg2"/>
                         <viewControllerLayoutGuide type="bottom" id="TFe-9Z-xHh"/>
@@ -681,7 +681,7 @@
         <!--TestVC-->
         <scene sceneID="N7H-NQ-Kmp">
             <objects>
-                <viewController storyboardIdentifier="testvc" id="gpj-4g-P9y" customClass="TestVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TestVC" id="gpj-4g-P9y" customClass="TestVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="46k-b1-8Uw"/>
                         <viewControllerLayoutGuide type="bottom" id="DSA-jA-xY9"/>

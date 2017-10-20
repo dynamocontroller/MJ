@@ -37,6 +37,13 @@ class ScoreCalculationVC: UIViewController {
     
     // MARK: -
     
+    static func instantiate() -> UIViewController {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: self.className)
+        
+        return vc
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

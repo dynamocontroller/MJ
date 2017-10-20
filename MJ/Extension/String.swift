@@ -9,8 +9,10 @@
 import Foundation
 
 extension String {
+    
     public var containsOnlyNumber: Bool {
         // [0-9]かどうかを検証
         return self.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
     }
+
 }
